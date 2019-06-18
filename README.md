@@ -1,5 +1,5 @@
 # python-miscellaneous
-Various simple programs in Python
+Various simple programs in Python:
 
 TU.py
 
