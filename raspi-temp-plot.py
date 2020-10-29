@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 
 def parse_file(filename, time=[], temp=[]):
     date = Path(filename).stem
-    print(date)
 
     with open(filename, 'r') as f:
         for line in f.readlines():
