@@ -1,16 +1,17 @@
-import matplotlib.pyplot as plt
 from sys import argv
+from pathlib import Path
+from datetime import datetime
+import matplotlib.pyplot as plt
 
-def parse_file(filename):
+def parse_file(filename, time=[], temp=[]):
+    date = Path(filename).stem
+    print(date)
+
     with open(filename, 'r') as f:
-        time = []
-        temp = []
-
         for line in f.readlines():
             time_i, temp_i = line.split('\t')
 
-            time_i = time_i.split(':')
-            time_i = float(time_i[0]) + float(time_i[1])/60
+            time_i = datetime.strptime(date+' '+time_i, "%Y-%m-%d %H:%M")
             temp_i = float(temp_i)
 
             time.append(time_i)
@@ -35,5 +36,9 @@ if __name__=="__main__":
     if len(argv)<2:
         print(f"{argv[0]} <log filename>")
     else:
-        time,  temp = parse_file(argv[1])
+        time, temp = [], []
+
+        for filename in argv[1:]:
+            time,  temp = parse_file(filename, time, temp)
+
         plot_temp(time, temp)
