@@ -36,7 +36,7 @@ def smooth_data(time, data, N=8):
 def plot_temp(time, temp):
     plt.plot(time, temp)
 
-    plt.title("Temperature throughout the day")
+    plt.title("Raspberry Pi Temperature")
     plt.xlabel("time [h]")
     plt.ylabel("temperature [ºC]")
     plt.grid()
