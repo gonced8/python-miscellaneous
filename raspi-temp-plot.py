@@ -21,7 +21,7 @@ def parse_file(filename, time=[], temp=[]):
     return time, temp
 
 
-def smooth_data(time, data, N=8):
+def smooth_data(time, data, N=5):
     time = np.array(time)
     data = np.array(data)
 
@@ -33,15 +33,27 @@ def smooth_data(time, data, N=8):
 
     return time, data
 
-def plot_temp(time, temp):
-    plt.plot(time, temp)
+def polynomial_regression(x, y, deg=1):
+    z = np.polyfit(x, y, deg)
+    return np.poly1d(z)
 
-    plt.title("Raspberry Pi Temperature")
-    plt.xlabel("time [h]")
+def plot_temp(time, temp, fit_line=False):
+    plt.plot(time, temp, label='measurement')
+
+    if fit_line:
+        x = range(0, len(temp))
+        p = polynomial_regression(x, temp, 1)
+        plt.plot(time, p(x), '--', label='linear regression')
+
+        plt.legend()
+
+    plt.title("Raspberry Pi CPU Temperature")
+    plt.xlabel("days")
     plt.ylabel("temperature [ºC]")
     plt.grid()
 
     plt.tight_layout()
+    plt.savefig("temp.png")
     plt.show()
 
 
@@ -55,4 +67,4 @@ if __name__=="__main__":
             time,  temp = parse_file(filename, time, temp)
 
         time, temp = smooth_data(time, temp)
-        plot_temp(time, temp)
+        plot_temp(time, temp, True) 
