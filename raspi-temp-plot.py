@@ -33,9 +33,11 @@ def smooth_data(time, data, N=5):
 
     return time, data
 
+
 def polynomial_regression(x, y, deg=1):
     z = np.polyfit(x, y, deg)
     return np.poly1d(z)
+
 
 def plot_temp(time, temp, fit_line=False):
     plt.plot(time, temp, label='measurement')
